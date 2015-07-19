@@ -22,16 +22,38 @@ namespace PracticeILAndDynamicMethods
         {
             Console.WriteLine(ILDivider(10, 2).ToString());
             Console.WriteLine(ILCalculate(1, 2, 3).ToString());
+            Console.WriteLine(Loop(2).ToString());
+            CallMethods();
             Console.ReadLine();
         }
+
+        static void CallMethods()
+        {
+            var myMethod = new DynamicMethod("MyMethod", typeof(void), null, typeof(Program).Module);
+            var il = myMethod.GetILGenerator();
+            il.Emit(OpCodes.Ldc_I4, 42);
+            //when you put a value on the stack and then call a method, those value automatically become the parameteres of the method
+            il.Emit(OpCodes.Call, typeof(Program).GetMethod("Print"));
+            il.Emit(OpCodes.Ret);
+
+            var method = (Action)myMethod.CreateDelegate(typeof(Action));
+            method();
+
+        }
+        public static void Print(int i)
+        {
+            Console.WriteLine("The Value passed tot PRint is {0}", i);
+        }
+
         delegate int DivideDelegate(int a, int b);
         static int Loop(int x)
         {
-            var result = 0;
-            for (int i = 0; i < 10; i++) {
-                result += i * x;
-            }
-           // return result;
+            //var result = 0;
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    result += i * x;
+            //}
+            //return result;
 
             //the code of above in IL
             var loop = new DynamicMethod("Loop", typeof(int), new[] { typeof(int) }, typeof(Program).Module);
@@ -60,7 +82,7 @@ namespace PracticeILAndDynamicMethods
             il.MarkLabel(loopStart);
 
             //now we are checking whether i is greater or equal to 10 in order to return out
-            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Ldloc_1);
             //there is no constant for 9 or above so this is how you load every other number
             il.Emit(OpCodes.Ldc_I4, 10);
             il.Emit(OpCodes.Bge, methodEnd);
@@ -70,15 +92,37 @@ namespace PracticeILAndDynamicMethods
             il.Emit(OpCodes.Ldloc_1);
             //load the method parameter x on the stack
             il.Emit(OpCodes.Ldarg_0);
-            //multiple the two values and remove them from stack and add the result to the stack
+            //multiply the two values and remove them from stack and add the result to the stack
             il.Emit(OpCodes.Mul);
 
-          
+            //now add the value to the variable result and store back into result
+            //load the result variable onto the stack
+            il.Emit(OpCodes.Ldloc_0);
+            //now the value from result and the value from the multiplication are next to each other, do an Add
+            il.Emit(OpCodes.Add);
+            //now store the value back into the result variable
+            il.Emit(OpCodes.Stloc_0);
 
+            //now the loop is done and we need to increment the variable i
+            //put i on the stack
+            il.Emit(OpCodes.Ldloc_1);
+            //put the number 1 on the stack
+            il.Emit(OpCodes.Ldc_I4_1);
+            //add them together which removes them from stack and put new result on stack
+            il.Emit(OpCodes.Add);
+            //store result back into i
+            il.Emit(OpCodes.Stloc_1);
 
-        
-        
-        
+            //go back to beginnings of the loop
+            il.Emit(OpCodes.Br, loopStart);
+
+            il.MarkLabel(methodEnd);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Ret);
+
+            var method = (Func<int, int>)loop.CreateDelegate(typeof(Func<int, int>));
+            return method(x);
+
         }
         static int ILDivider(int one, int two)
         {

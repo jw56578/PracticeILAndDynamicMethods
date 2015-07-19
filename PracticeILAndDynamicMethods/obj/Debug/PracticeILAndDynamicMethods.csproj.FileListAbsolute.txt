@@ -4,3 +4,9 @@ c:\users\jwoo\documents\visual studio 2013\Projects\PracticeILAndDynamicMethods\
 c:\users\jwoo\documents\visual studio 2013\Projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.csprojResolveAssemblyReference.cache
 c:\users\jwoo\documents\visual studio 2013\Projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.exe
 c:\users\jwoo\documents\visual studio 2013\Projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.pdb
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\bin\Debug\PracticeILAndDynamicMethods.exe.config
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.exe
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.pdb
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\bin\Debug\PracticeILAndDynamicMethods.exe
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\bin\Debug\PracticeILAndDynamicMethods.pdb
+C:\projects\PracticeILAndDynamicMethods\PracticeILAndDynamicMethods\obj\Debug\PracticeILAndDynamicMethods.csprojResolveAssemblyReference.cache
